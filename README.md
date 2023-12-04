@@ -10,6 +10,10 @@ This is our project for the Web Semantics course.
 
 - [Node.js](https://nodejs.org/en/)
 
+### VSCode extensions
+
+Install the recommended extensions for VSCode. Those extensions are specified in the `.vscode/extensions.json` file.
+
 ### Install dependencies
 
 ```bash
