@@ -21,12 +21,19 @@ interface SearchBarProps {
     allowClear?: boolean;
 }
 
-export const SearchBar: FC<SearchBarProps> = ({ value = '', allowClear = false }) => {
+export const SearchBar: FC<SearchBarProps> = ({
+    value = "",
+    allowClear = false,
+}) => {
     const navigate = useNavigate();
 
-    const handleChange = (event: React.SyntheticEvent<Element, Event>, value: string | { label: string, id: number } | null, reason: AutocompleteChangeReason) => {
+    const handleChange = (
+        event: React.SyntheticEvent<Element, Event>,
+        value: string | { label: string; id: number } | null,
+        reason: AutocompleteChangeReason,
+    ) => {
         if (!value && !allowClear) return;
-        
+
         let search: string;
 
         switch (typeof value) {
@@ -34,14 +41,16 @@ export const SearchBar: FC<SearchBarProps> = ({ value = '', allowClear = false }
                 search = value;
                 break;
             case "object":
-                search = value?.label ?? '';
+                search = value?.label ?? "";
                 break;
             default:
                 return;
         }
 
-        navigate(search ? `/search?search=${encodeURIComponent(search)}` : '/search');
-    }
+        navigate(
+            search ? `/search?search=${encodeURIComponent(search)}` : "/search",
+        );
+    };
 
     return (
         <FormControl>
@@ -56,4 +65,4 @@ export const SearchBar: FC<SearchBarProps> = ({ value = '', allowClear = false }
             />
         </FormControl>
     );
-}
+};
