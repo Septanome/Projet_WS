@@ -2,6 +2,7 @@
   "name": "projet-ws",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://septanome.github.io/Projet_WS/",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -15,6 +16,7 @@
     "@types/node": "^16.18.67",
     "@types/react": "^18.2.41",
     "@types/react-dom": "^18.2.17",
+    "gh-pages": "^6.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.1",
@@ -24,12 +26,14 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
+    "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
+    "test": "DISABLE_ESLINT_PLUGIN=true react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint src/**/*.tsx",
-    "lint:fix": "eslint --fix src/**/*.tsx"
+    "lint": "eslint --ext .tsx --ext .ts src/",
+    "lint:fix": "npm run lint -- --fix",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "browserslist": {
     "production": [
