@@ -1,15 +1,11 @@
-import { FC } from "react";
+import React, { FC } from "react";
 
 export const Header: FC = () => {
     return (
         <header>
-            <span>
-                {/* TITLE */}
-            </span>
+            <span>{/* TITLE */}</span>
 
-            <nav>
-                {/* NAV */}
-            </nav>
+            <nav>{/* NAV */}</nav>
         </header>
     );
-}
+};
