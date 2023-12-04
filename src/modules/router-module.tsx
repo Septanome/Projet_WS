@@ -8,6 +8,10 @@ export const router = createBrowserRouter([
         element: <Navigate to="/search" />,
     },
     {
+        path: "/Projet_WS",
+        element: <Navigate to="/search" />,
+    },
+    {
         path: "/search",
         element: <SearchPage />,
     },
