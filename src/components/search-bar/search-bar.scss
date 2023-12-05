@@ -1,0 +1,9 @@
+form {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 6px;
+    padding: 12px;
+    box-sizing: border-box;
+    max-width: 450px;
+}
