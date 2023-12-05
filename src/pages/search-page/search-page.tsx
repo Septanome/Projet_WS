@@ -27,7 +27,10 @@ export const SearchPage: FC = () => {
 
         // Execute the query and set the results
         query(`MY QUERY: ${search}`)
-            .then((results) => setResults(results))
+            .then((results) => {
+                setResults(results);
+                setError(null);
+            })
             .catch((error) => {
                 setError(String(error));
                 console.error(error);
