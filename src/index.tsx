@@ -3,13 +3,16 @@ import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import "./styles/styles.scss";
 import { App } from "./app/app";
+import { StyleProvider } from "./modules/style-provider";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement,
 );
 root.render(
     <React.StrictMode>
-        <App />
+        <StyleProvider>
+            <App />
+        </StyleProvider>
     </React.StrictMode>,
 );
 
