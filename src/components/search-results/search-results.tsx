@@ -2,11 +2,19 @@ import React, { FC, useEffect } from "react";
 
 interface SearchResultsProps {
     search: string;
+    results: any[];
 }
-export const SearchResults: FC<SearchResultsProps> = ({ search }) => {
+export const SearchResults: FC<SearchResultsProps> = ({ search, results }) => {
     return (
-        <p>
-            Searching for: <b>{search}</b>
-        </p>
+        <div>
+            <p>
+                Searching for: <b>{search}</b>
+            </p>
+            <ul>
+                {results.map((result, i) => (
+                    <li key={i}>{result}</li>
+                ))}
+            </ul>
+        </div>
     );
 };
