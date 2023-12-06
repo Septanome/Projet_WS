@@ -26,9 +26,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
-    "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
-    "test": "DISABLE_ESLINT_PLUGIN=true react-scripts test",
+    "start": "cross-env DISABLE_ESLINT_PLUGIN=true react-scripts start",
+    "build": "cross-env DISABLE_ESLINT_PLUGIN=true react-scripts build",
+    "test": "cross-env DISABLE_ESLINT_PLUGIN=true react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .tsx --ext .ts src/",
     "lint:fix": "npm run lint -- --fix",
@@ -49,6 +49,7 @@
   },
   "devDependencies": {
     "@typescript-eslint/parser": "^5.62.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.55.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.0.1",
