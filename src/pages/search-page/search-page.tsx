@@ -1,5 +1,6 @@
 import React, { FC, useEffect } from "react";
 import { SearchBar } from "../../components/search-bar/search-bar";
+import { SearchResults } from "../../components/search-results/search-results";
 import { useSearchParams } from "react-router-dom";
 import "./search-page.scss";
 import { useQuery } from "../../contexts/query-context/context";
@@ -41,17 +42,8 @@ export const SearchPage: FC = () => {
     return (
         <div className="search-page">
             <SearchBar value={search} allowClear />
+            <SearchResults search={search} results={results} />
             {error && <Typography color="danger">{error}</Typography>}
-
-            <p>
-                Searching for: <b>{search}</b>
-            </p>
-
-            <ul>
-                {results.map((result, i) => (
-                    <li key={i}>{result}</li>
-                ))}
-            </ul>
         </div>
     );
 };
