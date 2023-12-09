@@ -7,7 +7,7 @@ import { useQuery } from "../../contexts/query-context/context";
 import { Typography } from "@mui/joy";
 
 export const SearchPage: FC = () => {
-    const { query } = useQuery();
+    const { queryAllTypes } = useQuery();
     const [searchParams] = useSearchParams();
     const [search, setSearch] = React.useState<string>("");
     const [results, setResults] = React.useState<any[]>([]);
@@ -27,7 +27,7 @@ export const SearchPage: FC = () => {
         }
 
         // Execute the query and set the results
-        query(`MY QUERY: ${search}`)
+        queryAllTypes(search)
             .then((results) => {
                 setResults(results);
                 setError(null);
