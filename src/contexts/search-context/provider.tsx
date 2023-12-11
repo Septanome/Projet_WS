@@ -22,6 +22,9 @@ export const SearchProvider: FC<PropsWithChildren> = ({ children }) => {
         }
 
         setSearchLoading(true);
+        setSearchResult(
+            (prev) => prev ?? new PaginatedData<SearchResult>([], 0, 0, 0),
+        );
 
         new SearchRequest(searchQuery, searchOffset, searchLimit)
             .execute()

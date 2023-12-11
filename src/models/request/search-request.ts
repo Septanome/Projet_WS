@@ -64,41 +64,41 @@ export class SearchRequest extends Request<PaginatedData<SearchResult>> {
             escape_query(query);
 
         return `
-        SELECT ${select}
-        WHERE {
-            {
-                ${[CHARACTERS_REQ, LOCATIONS_REQ].join(" UNION ")}
+            SELECT ${select}
+            WHERE {
+                {
+                    ${[CHARACTERS_REQ, LOCATIONS_REQ].join(" UNION ")}
+                }
+
+                ?resource rdfs:label ?label .
+                ?resource dbo:abstract ?abstract .
+
+                FILTER (lang(?label) = 'en') .
+                FILTER (lang(?abstract) = 'en') .
+
+                BIND(
+                    REGEX(LCASE(?label), "${search_term_escaped_regex}", "gi") AS ?label_contains
+                )
+                BIND(
+                    REGEX(LCASE(?abstract), "${search_term_escaped_regex}", "gi")
+                    AS ?abstract_contains
+                ) .
+
+                FILTER (?label_contains || ?abstract_contains) .
+
+                OPTIONAL {
+                    ?resource dbo:thumbnail ?thumbnail .
+                }
+
+                BIND(STRLEN(?label) AS ?label_length) .
+                BIND(STR(LCASE(?label)) = "${search_term_escaped}" AS ?label_exact_match) .
+                BIND(REGEX(LCASE(?label), "(?>^|[^a-z0-9])${search_term_escaped}(?>[^a-z0-9]|$)", "i") AS ?label_word_match) .
             }
 
-            ?resource rdfs:label ?label .
-            ?resource dbo:abstract ?abstract .
-
-            FILTER (lang(?label) = 'en') .
-            FILTER (lang(?abstract) = 'en') .
-
-            BIND(
-                REGEX(LCASE(?label), "${search_term_escaped_regex}", "gi") AS ?label_contains
-            )
-            BIND(
-                REGEX(LCASE(?abstract), "${search_term_escaped_regex}", "gi")
-                AS ?abstract_contains
-            ) .
-
-            FILTER (?label_contains || ?abstract_contains) .
-
-            OPTIONAL {
-                ?resource dbo:thumbnail ?thumbnail .
-            }
-
-            BIND(STRLEN(?label) AS ?label_length) .
-            BIND(STR(LCASE(?label)) = "${search_term_escaped}" AS ?label_exact_match) .
-            BIND(REGEX(LCASE(?label), "(?>^|[^a-z0-9])${search_term_escaped}(?>[^a-z0-9]|$)", "i") AS ?label_word_match) .
-        }
-
-        ${orderBy ? `ORDER BY ${orderBy}` : ""}
-        
-        ${limit ? `LIMIT ${limit}` : ""}
-        ${offset ? `OFFSET ${offset}` : ""}
-    `;
+            ${orderBy ? `ORDER BY ${orderBy}` : ""}
+            
+            ${limit ? `LIMIT ${limit}` : ""}
+            ${offset ? `OFFSET ${offset}` : ""}
+        `;
     }
 }

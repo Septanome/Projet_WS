@@ -82,10 +82,11 @@ export const SearchBar: FC<SearchBarProps> = ({
                 value={value}
                 name="search"
                 disabled={disabled}
+                size="lg"
             />
             {!hideButton && (
-                <Button type="submit" disabled={disabled}>
-                    Search
+                <Button type="submit" size="lg" disabled={disabled}>
+                    <SearchRounded />
                 </Button>
             )}
         </form>

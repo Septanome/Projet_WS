@@ -55,7 +55,7 @@ export const SearchPage: FC = () => {
     }, [searchQuery]);
 
     return (
-        <div className="search-page">
+        <div className={"search-page" + (searchResult ? " has-results" : "")}>
             <div className="top-section">
                 <Logo />
                 <SearchBar
@@ -77,7 +77,6 @@ export const SearchPage: FC = () => {
                                 (value) => `${value.label} (${value.type})`,
                             )}
                         />
-                        <br />
                         <Pagination
                             pagination={searchResult}
                             disabled={searchLoading}
