@@ -1,4 +1,5 @@
 import React, { FC, useEffect } from "react";
+import { Logo } from "../../components/logo/logo";
 import { SearchBar } from "../../components/search-bar/search-bar";
 import { SearchResults } from "../../components/search-results/search-results";
 import { useSearchParams } from "react-router-dom";
@@ -41,9 +42,14 @@ export const SearchPage: FC = () => {
 
     return (
         <div className="search-page">
-            <SearchBar value={search} allowClear />
-            <SearchResults search={search} results={results} />
-            {error && <Typography color="danger">{error}</Typography>}
+            <div className="top-section">
+                <Logo />
+                <SearchBar value={search} allowClear />
+            </div>
+            <div className="bottom-section">
+                <SearchResults search={search} results={results} />
+                {error && <Typography color="danger">{error}</Typography>}
+            </div>
         </div>
     );
 };
