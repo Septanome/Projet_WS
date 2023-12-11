@@ -6,6 +6,7 @@ import { useSearch } from "../../contexts/search-context/context";
 import "./search-page.scss";
 import { CircularProgress, Typography } from "@mui/joy";
 import { Pagination } from "../../components/pagination/pagination";
+import { SearchResults } from "../../components/search-results/search-results";
 
 export const SearchPage: FC = () => {
     const {
@@ -24,30 +25,34 @@ export const SearchPage: FC = () => {
         setSearchQuery(decodeURIComponent(searchParams.get("search") ?? ""));
     }, [searchParams]);
 
-    const navigateToPage = useCallback((page: number) => {
-        setSearchParams((params) => {
-            params.set("page", String(page));
-            return params;
-        });
-    }, []);
+    const navigateToPage = useCallback(
+        (page: number) => {
+            setSearchParams((params) => {
+                params.set("page", String(page));
+                params.set("search", searchQuery ?? "");
+                return params;
+            });
+        },
+        [searchQuery],
+    );
 
     const navigatePreviousPage = useCallback(() => {
         setSearchParams((params) => {
             const currentPage = Number(params.get("page") ?? 1);
             params.set("page", String(Math.max(1, currentPage - 1)));
-            console.log(params.get("search"));
+            params.set("search", searchQuery ?? "");
             return params;
         });
-    }, []);
+    }, [searchQuery]);
 
     const navigateNextPage = useCallback(() => {
         setSearchParams((params) => {
             const currentPage = Number(params.get("page") ?? 1);
             params.set("page", String(currentPage + 1));
-            console.log(params.get("search"));
+            params.set("search", searchQuery ?? "");
             return params;
         });
-    }, []);
+    }, [searchQuery]);
 
     return (
         <div className="search-page">
@@ -60,18 +65,18 @@ export const SearchPage: FC = () => {
                 />
             </div>
             <div className="bottom-section">
-                {/* <SearchResults search={search} results={results} /> */}
                 {searchError && (
                     <Typography color="danger">{searchError}</Typography>
                 )}
                 {searchLoading && <CircularProgress />}
                 {searchResult && (
                     <>
-                        {searchResult.data.map((result) => (
-                            <div key={result.url}>
-                                {result.label} (<i>{result.type}</i>)
-                            </div>
-                        ))}
+                        <SearchResults
+                            search={searchQuery ?? ""}
+                            results={searchResult.data.map(
+                                (value) => `${value.label} (${value.type})`,
+                            )}
+                        />
                         <br />
                         <Pagination
                             pagination={searchResult}
