@@ -1,4 +1,5 @@
 import React, { FC, useEffect } from "react";
+import { Logo } from "../../components/logo/logo";
 import { SearchBar } from "../../components/search-bar/search-bar";
 import { SearchResults } from "../../components/search-results/search-results";
 import { useSearchParams } from "react-router-dom";
@@ -7,7 +8,7 @@ import { useQuery } from "../../contexts/query-context/context";
 import { Typography } from "@mui/joy";
 
 export const SearchPage: FC = () => {
-    const { query } = useQuery();
+    const { queryAllTypes } = useQuery();
     const [searchParams] = useSearchParams();
     const [search, setSearch] = React.useState<string>("");
     const [results, setResults] = React.useState<any[]>([]);
@@ -27,7 +28,7 @@ export const SearchPage: FC = () => {
         }
 
         // Execute the query and set the results
-        query(`MY QUERY: ${search}`)
+        queryAllTypes(search)
             .then((results) => {
                 setResults(results);
                 setError(null);
@@ -41,9 +42,14 @@ export const SearchPage: FC = () => {
 
     return (
         <div className="search-page">
-            <SearchBar value={search} allowClear />
-            <SearchResults search={search} results={results} />
-            {error && <Typography color="danger">{error}</Typography>}
+            <div className="top-section">
+                <Logo />
+                <SearchBar value={search} allowClear />
+            </div>
+            <div className="bottom-section">
+                <SearchResults search={search} results={results} />
+                {error && <Typography color="danger">{error}</Typography>}
+            </div>
         </div>
     );
 };
