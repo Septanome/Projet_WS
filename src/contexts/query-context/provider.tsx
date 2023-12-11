@@ -71,8 +71,7 @@ export const QueryProvider: FC<PropsWithChildren> = ({ children }) => {
         const res = await fetch(url);
 
         if (!res.ok) {
-            console.error(await res.text());
-            return [{}];
+            throw new Error("dbpedia returned an error");
         }
 
         const json = await res.json();
@@ -113,11 +112,14 @@ export const QueryProvider: FC<PropsWithChildren> = ({ children }) => {
     };
 
     const queryAllTypes = async (search_term: string): Promise<any[]> => {
-        const characterResults = await query(
-            search_term,
-            ResourceType.CHARACTER,
-        );
-        const locationResults = await query(search_term, ResourceType.LOCATION);
+        const characterPromise = query(search_term, ResourceType.CHARACTER);
+        const locationPromise = query(search_term, ResourceType.LOCATION);
+
+        const [characterResults, locationResults] = await Promise.all([
+            characterPromise,
+            locationPromise,
+        ]);
+
         const finalResults = characterResults.concat(locationResults);
         return finalResults;
     };
