@@ -1,4 +1,4 @@
-import Grid from '@mui/joy/Grid';
+import Grid from "@mui/joy/Grid";
 import React, { FC } from "react";
 import "./logo.scss";
 
