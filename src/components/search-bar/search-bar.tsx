@@ -21,12 +21,14 @@ interface SearchBarProps {
     value?: string;
     allowClear?: boolean;
     hideButton?: boolean;
+    disabled?: boolean;
 }
 
 export const SearchBar: FC<SearchBarProps> = ({
     value = "",
     allowClear = false,
     hideButton = false,
+    disabled = false,
 }) => {
     const navigate = useNavigate();
 
@@ -79,8 +81,13 @@ export const SearchBar: FC<SearchBarProps> = ({
                 onChange={handleChange}
                 value={value}
                 name="search"
+                disabled={disabled}
             />
-            {!hideButton && <Button type="submit">Search</Button>}
+            {!hideButton && (
+                <Button type="submit" disabled={disabled}>
+                    Search
+                </Button>
+            )}
         </form>
     );
 };

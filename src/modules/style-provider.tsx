@@ -5,7 +5,7 @@ const theme = extendTheme({});
 
 export const StyleProvider: FC<PropsWithChildren> = ({ children }) => {
     return (
-        <CssVarsProvider theme={theme} disableNestedContext>
+        <CssVarsProvider theme={theme} defaultMode="dark" disableNestedContext>
             <CssBaseline />
             {children}
         </CssVarsProvider>
