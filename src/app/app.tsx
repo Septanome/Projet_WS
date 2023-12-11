@@ -13,6 +13,7 @@ export const App: FC = () => {
                 <Header />
                 <Outlet />
             </div>
+            <div className="app-background"></div>
         </AppProvider>
     );
 };

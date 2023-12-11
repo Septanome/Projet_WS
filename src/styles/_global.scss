@@ -4,14 +4,6 @@ html, body {
     padding: 0;
     height: 100vh;
     position: relative;
-  
-    background: {
-        image: linear-gradient(rgba(110, 110, 110, 0.5), rgba(0, 0, 0, 0.5)), url('../../public/background.jpg');
-        position: center;
-        size: cover;
-        repeat: no-repeat;
-    }
-
 } 
 
 html, body, #root {
