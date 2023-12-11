@@ -9,25 +9,46 @@ export const CreditPage: FC = () => {
 
             <ul>
                 <li>
-                    Clement - <Link to="https://github.com/clemgi0">clemgi0</Link>
+                    Clement -
+                    <Link to="https://github.com/clemgi0">
+                        <img src="github_logo.png"></img>
+                    </Link>
                 </li>
                 <li>
-                    Irvin - <Link to="https://github.com/i-cote">i-cote</Link>
+                    Irvin -
+                    <Link to="https://github.com/i-cote">
+                        <img src="github_logo.png"></img>
+                    </Link>
                 </li>
                 <li>
-                    Widad - <Link to="https://github.com/widad17">widad17</Link>
+                    Widad -
+                    <Link to="https://github.com/widad17">
+                        <img src="github_logo.png"></img>
+                    </Link>
                 </li>
                 <li>
-                    Charles - <Link to="https://github.com/cfstcyr">cfstcyr</Link>
+                    Charles -
+                    <Link to="https://github.com/cfstcyr">
+                        <img src="github_logo.png"></img>
+                    </Link>
                 </li>
                 <li>
-                    Josué - <Link to="https://github.com/josue-venegas-almonacid">josue-venegas-almonacid</Link>
+                    Josué -
+                    <Link to="https://github.com/josue-venegas-almonacid">
+                        <img src="github_logo.png"></img>
+                    </Link>
                 </li>
                 <li>
-                    Hichem - <Link to="https://github.com/jini0x">jini0x</Link>
+                    Hichem -
+                    <Link to="https://github.com/jini0x">
+                        <img src="github_logo.png"></img>
+                    </Link>
                 </li>
                 <li>
-                    Daniel - <Link to="https://github.com/LordVERTON">LordVERTON</Link>
+                    Daniel -
+                    <Link to="https://github.com/LordVERTON">
+                        <img src="github_logo.png"></img>
+                    </Link>
                 </li>
             </ul>
         </div>
