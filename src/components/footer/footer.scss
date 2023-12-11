@@ -1,0 +1,30 @@
+footer {
+    background-color: grey;
+    opacity: 0.5;
+
+    nav {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 5px;
+
+        a {
+            margin: 20px 10px 20px 10px;
+            text-decoration: none;
+            color: white;
+        }
+    
+        img {
+            height: 20px;
+            vertical-align: middle;
+        }
+    
+        .internal-links {
+            margin-right: auto;
+        }
+    
+        .external-link {
+            margin-left: auto;
+        }
+    }
+}
