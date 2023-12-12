@@ -21,6 +21,10 @@ export const router = createBrowserRouter(
                     path: "/credit",
                     element: <CreditPage />,
                 },
+                {
+                    path: "*",
+                    element: <Navigate to="/search" />,
+                },
             ],
         },
     ],
