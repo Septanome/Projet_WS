@@ -2,8 +2,10 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
+    flex-grow: 1;
     align-items: center;
     padding: 24px;
+    height: 100%;
 
     .top-section {
         display: grid;

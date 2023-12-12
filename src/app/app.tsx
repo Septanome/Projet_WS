@@ -1,7 +1,6 @@
 import React from "react";
 import { FC } from "react";
-import { Outlet, RouterProvider } from "react-router-dom";
-import { router } from "../modules/router-module";
+import { Outlet } from "react-router-dom";
 import { Header } from "../components/header/header";
 import { Footer } from "../components/footer/footer";
 import "./app.scss";
@@ -12,7 +11,9 @@ export const App: FC = () => {
         <AppProvider>
             <div className="app">
                 <Header />
-                <Outlet />
+                <main>
+                    <Outlet />
+                </main>
                 <Footer />
             </div>
             <div className="app-background"></div>
