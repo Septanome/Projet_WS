@@ -1,54 +1,91 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useCallback, useEffect } from "react";
 import { Logo } from "../../components/logo/logo";
 import { SearchBar } from "../../components/search-bar/search-bar";
-import { SearchResults } from "../../components/search-results/search-results";
 import { useSearchParams } from "react-router-dom";
+import { useSearch } from "../../contexts/search-context/context";
 import "./search-page.scss";
-import { useQuery } from "../../contexts/query-context/context";
-import { Typography } from "@mui/joy";
+import { CircularProgress, Typography } from "@mui/joy";
+import { Pagination } from "../../components/pagination/pagination";
+import { SearchResults } from "../../components/search-results/search-results";
 
 export const SearchPage: FC = () => {
-    const { queryAllTypes } = useQuery();
-    const [searchParams] = useSearchParams();
-    const [search, setSearch] = React.useState<string>("");
-    const [results, setResults] = React.useState<any[]>([]);
-    const [error, setError] = React.useState<string | null>(null);
+    const {
+        searchQuery,
+        searchResult,
+        searchError,
+        searchLoading,
+        setSearchQuery,
+        setSearchPage,
+    } = useSearch();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(() => {
         // Get the search param from the URL and decode it
-        setSearch(decodeURIComponent(searchParams.get("search") ?? ""));
+        setSearchPage(Number(searchParams.get("page") ?? 1));
+        setSearchQuery(decodeURIComponent(searchParams.get("search") ?? ""));
     }, [searchParams]);
 
-    useEffect(() => {
-        setError(null);
-
-        if (!search) {
-            setResults([]);
-            return;
-        }
-
-        // Execute the query and set the results
-        queryAllTypes(search)
-            .then((results) => {
-                setResults(results);
-                setError(null);
-            })
-            .catch((error) => {
-                setError(String(error));
-                console.error(error);
-                setResults([]);
+    const navigateToPage = useCallback(
+        (page: number) => {
+            setSearchParams((params) => {
+                params.set("page", String(page));
+                params.set("search", searchQuery ?? "");
+                return params;
             });
-    }, [search]);
+        },
+        [searchQuery],
+    );
+
+    const navigatePreviousPage = useCallback(() => {
+        setSearchParams((params) => {
+            const currentPage = Number(params.get("page") ?? 1);
+            params.set("page", String(Math.max(1, currentPage - 1)));
+            params.set("search", searchQuery ?? "");
+            return params;
+        });
+    }, [searchQuery]);
+
+    const navigateNextPage = useCallback(() => {
+        setSearchParams((params) => {
+            const currentPage = Number(params.get("page") ?? 1);
+            params.set("page", String(currentPage + 1));
+            params.set("search", searchQuery ?? "");
+            return params;
+        });
+    }, [searchQuery]);
 
     return (
-        <div className="search-page">
+        <div className={"search-page" + (searchResult ? " has-results" : "")}>
             <div className="top-section">
                 <Logo />
-                <SearchBar value={search} allowClear />
+                <SearchBar
+                    value={searchQuery ?? undefined}
+                    disabled={searchLoading}
+                    allowClear
+                />
             </div>
             <div className="bottom-section">
-                <SearchResults search={search} results={results} />
-                {error && <Typography color="danger">{error}</Typography>}
+                {searchError && (
+                    <Typography color="danger">{searchError}</Typography>
+                )}
+                {searchLoading && <CircularProgress />}
+                {searchResult && (
+                    <>
+                        <SearchResults
+                            search={searchQuery ?? ""}
+                            results={searchResult.data.map(
+                                (value) => `${value.label} (${value.type})`,
+                            )}
+                        />
+                        <Pagination
+                            pagination={searchResult}
+                            disabled={searchLoading}
+                            goToPage={navigateToPage}
+                            goBack={navigatePreviousPage}
+                            goForward={navigateNextPage}
+                        />
+                    </>
+                )}
             </div>
         </div>
     );

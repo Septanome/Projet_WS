@@ -1,5 +1,26 @@
 .app {
     min-height: 100%;
     display: grid;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto 1fr auto;
+
+    main {
+        width: 100%;
+        max-width: 860px;
+        justify-self: center;
+    }
+}
+
+.app-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -100;
+    background: {
+        image: linear-gradient(rgba(110, 110, 110, 0.5), rgba(0, 0, 0, 0.5)), url('../../public/background.jpg');
+        position: center;
+        size: cover;
+        repeat: no-repeat;
+    }
 }

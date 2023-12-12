@@ -1,33 +1,34 @@
 import { SearchRounded } from "@mui/icons-material";
-import { Autocomplete, AutocompleteChangeReason, Button } from "@mui/joy";
-import React, { FC } from "react";
+import {
+    Autocomplete,
+    AutocompleteChangeReason,
+    Button,
+    CircularProgress,
+} from "@mui/joy";
+import React, { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./search-bar.scss";
-
-const ITEMS = [
-    { label: "Hamburger", id: 1 },
-    { label: "Fries", id: 2 },
-    { label: "Pizza", id: 3 },
-    { label: "Pasta", id: 4 },
-    { label: "Ice Cream", id: 5 },
-    { label: "Sushi", id: 6 },
-    { label: "Steak", id: 7 },
-    { label: "Salad", id: 8 },
-    { label: "Soup", id: 9 },
-    { label: "Sandwich", id: 10 },
-];
+import { AutocompleteResult } from "../../models/request/autocomplete";
+import { AutocompleteRequest } from "../../models/request/autocomplete-request";
+import { useDebounce } from "usehooks-ts";
 
 interface SearchBarProps {
     value?: string;
     allowClear?: boolean;
     hideButton?: boolean;
+    disabled?: boolean;
 }
 
 export const SearchBar: FC<SearchBarProps> = ({
     value = "",
     allowClear = false,
     hideButton = false,
+    disabled = false,
 }) => {
+    const [search, setSearch] = useState(value);
+    const debouncedSearch = useDebounce(search, 500);
+    const [autocomplete, setAutocomplete] = useState<AutocompleteResult[]>([]);
+    const [autocompleteLoading, setAutocompleteLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleSearch = (search: string) => {
@@ -36,7 +37,8 @@ export const SearchBar: FC<SearchBarProps> = ({
         );
     };
 
-    const handleSelect = (item: { label: string; id: number }) => {
+    const handleSelect = (item: AutocompleteResult) => {
+        // TODO: navigate to actual item
         handleSearch(item.label);
     };
 
@@ -48,7 +50,7 @@ export const SearchBar: FC<SearchBarProps> = ({
 
     const handleChange = (
         event: React.SyntheticEvent<Element, Event>,
-        value: string | { label: string; id: number } | null,
+        value: string | AutocompleteResult | null,
         reason: AutocompleteChangeReason,
     ) => {
         if (!value && !allowClear) return;
@@ -68,19 +70,54 @@ export const SearchBar: FC<SearchBarProps> = ({
         }
     };
 
+    useEffect(() => {
+        if (!debouncedSearch) {
+            setAutocomplete([]);
+            return;
+        }
+
+        setAutocompleteLoading(true);
+        new AutocompleteRequest(debouncedSearch)
+            .execute()
+            .then(setAutocomplete)
+            .catch(console.error)
+            .finally(() => setAutocompleteLoading(false));
+    }, [debouncedSearch]);
+
+    const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        const target = event.target as HTMLInputElement;
+        const value = target.value;
+
+        setSearch(value);
+    };
+
     return (
         <form onSubmit={handleSubmit}>
             <Autocomplete
                 placeholder="Search for this or that..."
                 startDecorator={<SearchRounded />}
-                options={ITEMS}
+                endDecorator={
+                    autocompleteLoading ? (
+                        <CircularProgress color="neutral" size="sm" />
+                    ) : (
+                        <></>
+                    )
+                }
+                options={autocomplete}
                 freeSolo={true}
                 blurOnSelect={true}
                 onChange={handleChange}
                 value={value}
                 name="search"
+                disabled={disabled}
+                size="lg"
+                onKeyUp={handleKeyUp}
             />
-            {!hideButton && <Button type="submit">Search</Button>}
+            {!hideButton && (
+                <Button type="submit" size="lg" disabled={disabled}>
+                    <SearchRounded />
+                </Button>
+            )}
         </form>
     );
 };
