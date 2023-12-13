@@ -2,6 +2,7 @@ import React from "react";
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import { SearchPage } from "../pages/search-page/search-page";
 import { CreditPage } from "../pages/credit-page/credit-page";
+import { LocationPage } from "../pages/location-page/location-page";
 import { App } from "../app/app";
 
 export const router = createBrowserRouter(
@@ -20,6 +21,10 @@ export const router = createBrowserRouter(
                 {
                     path: "/credit",
                     element: <CreditPage />,
+                },
+                {
+                    path: "/location/:locationName",
+                    element: <LocationPage />,
                 },
                 {
                     path: "*",

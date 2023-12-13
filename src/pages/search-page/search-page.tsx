@@ -7,6 +7,7 @@ import "./search-page.scss";
 import { CircularProgress, Typography } from "@mui/joy";
 import { Pagination } from "../../components/pagination/pagination";
 import { SearchResults } from "../../components/search-results/search-results";
+import { Link } from "react-router-dom";
 
 export const SearchPage: FC = () => {
     const {
@@ -73,9 +74,16 @@ export const SearchPage: FC = () => {
                     <>
                         <SearchResults
                             search={searchQuery ?? ""}
-                            results={searchResult.data.map(
-                                (value) => `${value.label} (${value.type})`,
-                            )}
+                            results={searchResult.data.map((value) => (
+                                <Link
+                                    to={`/location/${encodeURIComponent(
+                                        value.uriPart,
+                                    )}`}
+                                    key={value.url}
+                                >
+                                    `${value.label} (${value.type})`
+                                </Link>
+                            ))}
                         />
                         <Pagination
                             pagination={searchResult}
