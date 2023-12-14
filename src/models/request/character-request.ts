@@ -3,14 +3,12 @@ import { CharacterResult } from "./character";
 import { escape_query } from "../../utils/query";
 import { CHARACTERS_REQ, LOCATIONS_REQ } from "../../constants/requests";
 
-
 export class CharacterRequest extends Request<CharacterResult[]> {
-
     constructor(uri: string) {
         super();
 
         // Example
-        this.queries = [this.buildCharacterQuery(uri)]; 
+        this.queries = [this.buildCharacterQuery(uri)];
     }
 
     formatResult(data: any[]): CharacterResult[] {
@@ -22,11 +20,15 @@ export class CharacterRequest extends Request<CharacterResult[]> {
                 abstract: binding.abstract.value,
                 thumbnail: binding.thumbnail ? binding.thumbnail.value : null,
                 abode: binding.abode ? binding.abode.value : null,
-                children: binding.children ? binding.children.value.split(",") : null,
+                children: binding.children
+                    ? binding.children.value.split(",")
+                    : null,
                 consort: binding.consort ? binding.consort.value : null,
                 godOf: binding.godOf ? binding.godOf.value.split(",") : null,
                 parents: binding.parents ? binding.parents.value : null,
-                siblings: binding.siblings ? binding.siblings.value.split(",") : null,
+                siblings: binding.siblings
+                    ? binding.siblings.value.split(",")
+                    : null,
                 planet: binding.planet ? binding.planet.value : null,
                 symbol: binding.symbol ? binding.symbol.value.split(",") : null,
             }),
@@ -58,4 +60,3 @@ export class CharacterRequest extends Request<CharacterResult[]> {
         `;
     }
 }
-
