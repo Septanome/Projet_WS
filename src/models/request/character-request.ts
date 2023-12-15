@@ -40,6 +40,7 @@ export class CharacterRequest extends Request<CharacterResult[]> {
             SELECT DISTINCT ?label ?abstract ?thumbnail ?abode ?children ?consort ?parents ?planet ?siblings
             GROUP_CONCAT(DISTINCT ?godOf; SEPARATOR=",") AS ?godOfs
             GROUP_CONCAT(DISTINCT ?symbol; SEPARATOR=",") AS ?symbols
+            GROUP_CONCAT(DISTINCT ?children; SEPARATOR=",") AS ?childrens
             WHERE {
                 <${selectedCharacterUri}> rdfs:label ?label ;
                     dbo:abstract ?abstract .
