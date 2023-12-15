@@ -37,10 +37,13 @@ export class CharacterRequest extends Request<CharacterResult[]> {
 
     private buildCharacterQuery(selectedCharacterUri: string): string {
         return `
-            SELECT DISTINCT ?label ?abstract ?thumbnail ?abode ?children ?consort ?parents ?planet ?siblings
+            SELECT DISTINCT ?label ?abstract ?thumbnail ?abode ?planet
             GROUP_CONCAT(DISTINCT ?godOf; SEPARATOR=",") AS ?godOfs
             GROUP_CONCAT(DISTINCT ?symbol; SEPARATOR=",") AS ?symbols
             GROUP_CONCAT(DISTINCT ?children; SEPARATOR=",") AS ?childrens
+            GROUP_CONCAT(DISTINCT ?siblings; SEPARATOR=",") AS ?siblings
+            GROUP_CONCAT(DISTINCT ?consort; SEPARATOR=",") AS ?consorts
+            GROUP_CONCAT(DISTINCT ?parents; SEPARATOR=",") AS ?parents
             WHERE {
                 <${selectedCharacterUri}> rdfs:label ?label ;
                     dbo:abstract ?abstract .
