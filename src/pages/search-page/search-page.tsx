@@ -73,9 +73,7 @@ export const SearchPage: FC = () => {
                     <>
                         <SearchResults
                             search={searchQuery ?? ""}
-                            results={searchResult.data.map(
-                                (value) => `${value.label} (${value.type})`,
-                            )}
+                            results={searchResult.data}
                         />
                         <Pagination
                             pagination={searchResult}
