@@ -36,7 +36,7 @@ export interface CharacterResult {
     thumbnail: string | null;
     abode: string | null;
     children: string[] | null;
-    consort: string | null;
+    consort: string[] | null;
     godOf: string[] | null;
     parents: string | null;
     siblings: string[] | null;

@@ -23,7 +23,7 @@ export class CharacterRequest extends Request<CharacterResult> {
             children: binding.children
                 ? binding.children.value.split(",")
                 : null,
-            consort: binding.consort ? binding.consort.value : null,
+            consort: binding.consort ? binding.consort.value.split(",") : null,
             godOf: binding.godOf ? binding.godOf.value.split(",") : null,
             parents: binding.parents ? binding.parents.value : null,
             siblings: binding.siblings

@@ -6,6 +6,7 @@ import { CharacterResult } from "../../models/request/search";
 
 export const CharacterPage: FC = () => {
     const [characterResult, setCharacterResult] = useState<CharacterResult>();
+    const [searchError, setSearchError] = useState<string | null>(null);
 
     const { characterName: encodedCharacterName } = useParams<{
         characterName: string;
@@ -16,9 +17,16 @@ export const CharacterPage: FC = () => {
 
         const characterRequest = new CharacterRequest(characterName);
 
-        characterRequest.execute().then((results) => {
-            setCharacterResult(results);
-        });
+        characterRequest
+            .execute()
+            .then((results) => {
+                setCharacterResult(results);
+            })
+            .catch((error) => {
+                setSearchError(String(error));
+                console.error(error);
+                setCharacterResult(undefined);
+            });
     }, []);
 
     return (
