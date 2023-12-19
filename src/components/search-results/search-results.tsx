@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from "react";
 import CardComponent from "../card/card";
 import { SearchResult } from "../../models/request/search";
+import { Link } from "react-router-dom";
 import Grid from "@mui/joy/Grid";
 
 interface SearchResultsProps {
