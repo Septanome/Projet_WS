@@ -17,14 +17,7 @@ export const SearchResults: FC<SearchResultsProps> = ({ search, results }) => {
 
             {results.map((result, index) => (
                 <Grid key={index} xs={6} md={3}>
-                    <Link
-                        to={`/${result.type}/${encodeURIComponent(
-                            result.uriPart,
-                        )}`}
-                        key={result.url}
-                    >
-                        <CardComponent content={result} />
-                    </Link>
+                    <CardComponent content={result} />
                 </Grid>
             ))}
         </Grid>
