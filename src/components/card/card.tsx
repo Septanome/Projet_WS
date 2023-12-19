@@ -10,13 +10,16 @@ import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
 import HelpIcon from "@mui/icons-material/Help";
 import { FC } from "react";
 import { SearchResult } from "../../models/request/search";
+import { useNavigate } from "react-router-dom";
 
 interface CardResultsProps {
     content: SearchResult;
 }
 export const CardComponent: FC<CardResultsProps> = ({ content }) => {
+    const navigate = useNavigate();
+
     return (
-        <Link to={`/${content.uriPart}`}>
+        <Link to={`/${content.type}/${content.uriPart}`}>
             <Card sx={{ minHeight: "280px", width: 180 }}>
                 <CardCover>
                     {content.thumbnail ? (
