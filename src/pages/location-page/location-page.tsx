@@ -6,7 +6,8 @@ import { LocationRequest } from "../../models/request/location-request";
 import "./location-page.scss";
 import { LocationResult } from "../../models/request/search";
 import Breadcrumbs from "@mui/joy/Breadcrumbs";
-import { Link, Typography } from "@mui/joy";
+import { Link } from "react-router-dom";
+import { Typography } from "@mui/joy";
 import PersonIcon from "@mui/icons-material/Person";
 import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
 import HelpIcon from "@mui/icons-material/Help";
@@ -25,7 +26,6 @@ export const LocationPage: FC = () => {
 
         locationRequest.execute().then((results) => {
             setLocationResult(results);
-            console.log(locationResult);
         });
     }, []);
 
@@ -66,7 +66,15 @@ export const LocationPage: FC = () => {
                                 aria-label="breadcrumbs"
                                 sx={{ color: "#fff" }}
                             >
-                                <Typography textColor="#fff">Search</Typography>
+                                <Link
+                                    to={"/"}
+                                    style={{
+                                        color: "#fff",
+                                        textDecoration: "none",
+                                    }}
+                                >
+                                    Search
+                                </Link>
                                 <Typography textColor="#fff">
                                     <LocationOnRoundedIcon
                                         sx={{ mr: 0.5, color: "#fff" }}
@@ -86,13 +94,14 @@ export const LocationPage: FC = () => {
                             <Typography textColor="#fff" level="h2">
                                 {locationResult?.label ?? ""}
                             </Typography>
-                            <Typography textColor="#fff" level="h3">
-                                {locationResult?.country ?? ""}
-                            </Typography>
-                            <Typography textColor="#fff" level="h4">
-                                {locationResult?.latitude ?? ""}° -{" "}
-                                {locationResult?.longitude ?? ""}°
-                            </Typography>
+
+                            {locationResult?.latitude &&
+                                locationResult?.longitude && (
+                                    <Typography textColor="#fff" level="h4">
+                                        {locationResult?.latitude ?? ""}° -{" "}
+                                        {locationResult?.longitude ?? ""}°
+                                    </Typography>
+                                )}
                         </Box>
 
                         <Box sx={{ pt: 1, pb: 1 }}>
