@@ -7,7 +7,11 @@ export const Logo: FC = () => {
     return (
         <Link to="/">
             <Grid container justifyContent="center">
-                <img src="logo.png" className="logo" alt="logo" />
+                <img
+                    src={process.env.PUBLIC_URL + "/logo.png"}
+                    className="logo"
+                    alt="logo"
+                />
             </Grid>
         </Link>
     );
