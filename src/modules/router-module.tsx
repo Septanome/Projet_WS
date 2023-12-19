@@ -3,6 +3,7 @@ import { Navigate, createBrowserRouter } from "react-router-dom";
 import { SearchPage } from "../pages/search-page/search-page";
 import { CreditPage } from "../pages/credit-page/credit-page";
 import { LocationPage } from "../pages/location-page/location-page";
+import { CharacterPage } from "../pages/character-page/character-page";
 import { App } from "../app/app";
 
 export const router = createBrowserRouter(
@@ -25,6 +26,10 @@ export const router = createBrowserRouter(
                 {
                     path: "/location/:locationName",
                     element: <LocationPage />,
+                },
+                {
+                    path: "/character/:characterName",
+                    element: <CharacterPage />,
                 },
                 {
                     path: "*",
