@@ -44,18 +44,18 @@ export class CharacterRequest extends Request<CharacterResult> {
             GROUP_CONCAT(DISTINCT ?consort; SEPARATOR=",") AS ?consorts
             GROUP_CONCAT(DISTINCT ?parents; SEPARATOR=",") AS ?parents
             WHERE {
-                dbr:${selectedCharacterUri} rdfs:label ?label ;
+                <http://dbpedia.org/resource/${selectedCharacterUri}> rdfs:label ?label ;
                     dbo:abstract ?abstract .
     
-                OPTIONAL { dbr:${selectedCharacterUri} dbo:thumbnail ?thumbnail }
-                OPTIONAL { dbr:${selectedCharacterUri} dbp:abode ?abode }
-                OPTIONAL { dbr:${selectedCharacterUri} dbp:children ?children}
-                OPTIONAL { dbr:${selectedCharacterUri} dbp:consort ?consort }
-                OPTIONAL { dbr:${selectedCharacterUri} dbp:godOf ?godOf }
-                OPTIONAL { dbr:${selectedCharacterUri} dbp:parents ?parents }
-                OPTIONAL { dbr:${selectedCharacterUri} dbp:planet ?planet }
-                OPTIONAL { dbr:${selectedCharacterUri} dbp:symbol ?symbol }
-                OPTIONAL { dbr:${selectedCharacterUri} dbp:siblings ?siblings }
+                OPTIONAL { <http://dbpedia.org/resource/${selectedCharacterUri}> dbo:thumbnail ?thumbnail }
+                OPTIONAL { <http://dbpedia.org/resource/${selectedCharacterUri}> dbp:abode ?abode }
+                OPTIONAL { <http://dbpedia.org/resource/${selectedCharacterUri}> dbp:children ?children}
+                OPTIONAL { <http://dbpedia.org/resource/${selectedCharacterUri}> dbp:consort ?consort }
+                OPTIONAL { <http://dbpedia.org/resource/${selectedCharacterUri}> dbp:godOf ?godOf }
+                OPTIONAL { <http://dbpedia.org/resource/${selectedCharacterUri}> dbp:parents ?parents }
+                OPTIONAL { <http://dbpedia.org/resource/${selectedCharacterUri}> dbp:planet ?planet }
+                OPTIONAL { <http://dbpedia.org/resource/${selectedCharacterUri}> dbp:symbol ?symbol }
+                OPTIONAL { <http://dbpedia.org/resource/${selectedCharacterUri}> dbp:siblings ?siblings }
     
                 FILTER (lang(?label) = 'en')
                 FILTER (lang(?abstract) = 'en')
