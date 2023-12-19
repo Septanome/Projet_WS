@@ -9,9 +9,10 @@ import PersonIcon from "@mui/icons-material/Person";
 import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
 import HelpIcon from "@mui/icons-material/Help";
 import { FC } from "react";
+import { SearchResult } from "../../models/request/search";
 
 interface CardResultsProps {
-    content: any;
+    content: SearchResult;
 }
 export const CardComponent: FC<CardResultsProps> = ({ content }) => {
     return (
