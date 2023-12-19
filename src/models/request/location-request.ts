@@ -1,7 +1,5 @@
-import { CHARACTERS_REQ, LOCATIONS_REQ } from "../../constants/requests";
-import { escape_query } from "../../utils/query";
 import { Request } from "./request";
-import { LocationQuery, LocationResult } from "./search";
+import { LocationResult } from "./search";
 
 const DEFAULT_LIMIT = 10;
 
@@ -9,15 +7,11 @@ export class LocationRequest extends Request<LocationResult> {
     constructor(query: string) {
         super();
 
-        this.queries = [
-            this.buildSearchQuery("Athens"), // TO MODIFY LATER, IT'S JUST FOR TEST
-        ];
+        this.queries = [this.buildSearchQuery(query)];
     }
 
     formatResult(data: any[]): LocationResult {
         const [resources] = data;
-
-        console.log(resources);
 
         const binding = resources.results.bindings[0];
 
@@ -35,7 +29,7 @@ export class LocationRequest extends Request<LocationResult> {
         };
     }
 
-    buildSearchQuery(select: string): string {
+    private buildSearchQuery(select: string): string {
         return `
         SELECT DISTINCT ?abstract ?thumbnail ?name ?comment ?latitude ?longitude ?country
         WHERE {
