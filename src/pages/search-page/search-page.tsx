@@ -1,13 +1,12 @@
 import React, { FC, useCallback, useEffect } from "react";
 import { Logo } from "../../components/logo/logo";
 import { SearchBar } from "../../components/search-bar/search-bar";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import { useSearch } from "../../contexts/search-context/context";
 import "./search-page.scss";
 import { CircularProgress, Typography } from "@mui/joy";
 import { Pagination } from "../../components/pagination/pagination";
 import { SearchResults } from "../../components/search-results/search-results";
-import { Link } from "react-router-dom";
 
 export const SearchPage: FC = () => {
     const {
@@ -76,7 +75,7 @@ export const SearchPage: FC = () => {
                             search={searchQuery ?? ""}
                             results={searchResult.data.map((value) => (
                                 <Link
-                                    to={`/location/${encodeURIComponent(
+                                    to={`/${value.type}/${encodeURIComponent(
                                         value.uriPart,
                                     )}`}
                                     key={value.url}

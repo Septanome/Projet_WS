@@ -27,4 +27,9 @@ export interface LocationResult {
     description: string;
     uriPart: string;
     thumbnail: string | null;
+    name: string | null;
+    comment: string | null;
+    latitude: number;
+    longitude: number;
+    country: string | null;
 }
