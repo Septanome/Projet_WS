@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useEffect } from "react";
 import { Logo } from "../../components/logo/logo";
 import { SearchBar } from "../../components/search-bar/search-bar";
-import { useSearchParams, Link } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useSearch } from "../../contexts/search-context/context";
 import "./search-page.scss";
 import { CircularProgress, Typography } from "@mui/joy";
@@ -73,16 +73,7 @@ export const SearchPage: FC = () => {
                     <>
                         <SearchResults
                             search={searchQuery ?? ""}
-                            results={searchResult.data.map((value) => (
-                                <Link
-                                    to={`/${value.type}/${encodeURIComponent(
-                                        value.uriPart,
-                                    )}`}
-                                    key={value.url}
-                                >
-                                    `${value.label} (${value.type})`
-                                </Link>
-                            ))}
+                            results={searchResult.data}
                         />
                         <Pagination
                             pagination={searchResult}
