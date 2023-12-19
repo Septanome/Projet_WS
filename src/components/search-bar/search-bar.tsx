@@ -38,8 +38,7 @@ export const SearchBar: FC<SearchBarProps> = ({
     };
 
     const handleSelect = (item: AutocompleteResult) => {
-        // TODO: navigate to actual item
-        handleSearch(item.label);
+        navigate(`/${item.type}/${item.label}`);
     };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
