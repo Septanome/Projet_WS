@@ -18,12 +18,21 @@ export const CardComponent: FC<CardResultsProps> = ({ content }) => {
         <Link to={`/${content.uriPart}`}>
             <Card sx={{ minHeight: "280px", width: 180 }}>
                 <CardCover>
-                    <img
-                        src={content.thumbnail}
-                        srcSet={content.thumbnail + " 2x"}
-                        loading="lazy"
-                        alt={content.label}
-                    />
+                    {content.thumbnail ? (
+                        <img
+                            src={content.thumbnail}
+                            srcSet={content.thumbnail + " 2x"}
+                            loading="lazy"
+                            alt={content.label}
+                        />
+                    ) : (
+                        <img
+                            src="no_image.jpg"
+                            srcSet="no_image.jpg 2x"
+                            loading="lazy"
+                            alt={content.label}
+                        />
+                    )}
                 </CardCover>
                 <CardCover
                     sx={{
@@ -33,7 +42,7 @@ export const CardComponent: FC<CardResultsProps> = ({ content }) => {
                 />
                 <CardContent sx={{ justifyContent: "flex-end" }}>
                     <Typography level="title-lg" textColor="#fff">
-                        {content.label}
+                        {content.label ? content.label : "Unknown"}
                     </Typography>
                     <Typography
                         startDecorator={
@@ -47,8 +56,10 @@ export const CardComponent: FC<CardResultsProps> = ({ content }) => {
                         }
                         textColor="neutral.300"
                     >
-                        {content.type.at(0).toUpperCase() +
-                            content.type.slice(1)}
+                        {content.type
+                            ? content.type.charAt(0).toUpperCase() +
+                              content.type.slice(1)
+                            : "Unknown"}
                     </Typography>
                 </CardContent>
             </Card>
