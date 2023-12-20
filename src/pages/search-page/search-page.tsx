@@ -69,7 +69,7 @@ export const SearchPage: FC = () => {
                     <Typography color="danger">{searchError}</Typography>
                 )}
                 {searchLoading && <CircularProgress />}
-                {searchResult && (
+                {!searchLoading && searchResult && (
                     <>
                         <SearchResults
                             search={searchQuery ?? ""}

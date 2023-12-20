@@ -37,7 +37,7 @@ export const CharacterPage: FC = () => {
                 console.error(error);
                 setCharacterResult(undefined);
             });
-    }, [characterResult]);
+    }, [encodedCharacterName]);
 
     return (
         <div className="character-page has-results">
