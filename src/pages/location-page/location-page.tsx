@@ -119,9 +119,19 @@ export const LocationPage: FC = () => {
                         </Box>
 
                         <Box sx={{ pt: 1, pb: 1 }}>
-                            <Typography textColor="#fff" textAlign="justify">
-                                {locationResult?.description ?? ""}
-                            </Typography>
+                            {locationResult?.description && (
+                                <>
+                                    <Typography textColor="#fff" level="h4">
+                                        Description
+                                    </Typography>
+                                    <Typography
+                                        textColor="#fff"
+                                        textAlign="justify"
+                                    >
+                                        {locationResult?.description}
+                                    </Typography>
+                                </>
+                            )}
                         </Box>
                     </>
                 )}
