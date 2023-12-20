@@ -57,14 +57,28 @@ export const CharacterPage: FC = () => {
                 {characterResult && (
                     <>
                         <Box sx={{ pt: 1, pb: 1 }}>
-                            {characterResult?.thumbnail && (
+                            {characterResult?.thumbnail ? (
                                 <AspectRatio flex maxHeight={"200px"}>
                                     <img
                                         src={characterResult?.thumbnail}
                                         srcSet={
                                             characterResult?.thumbnail + "2x"
                                         }
-                                        alt="A beautiful landscape."
+                                        alt=""
+                                    />
+                                </AspectRatio>
+                            ) : (
+                                <AspectRatio flex maxHeight={"200px"}>
+                                    <img
+                                        src={
+                                            process.env.PUBLIC_URL +
+                                            "/no_image.jpg"
+                                        }
+                                        srcSet={
+                                            process.env.PUBLIC_URL +
+                                            "/no_image.jpg 2x"
+                                        }
+                                        alt=""
                                     />
                                 </AspectRatio>
                             )}
