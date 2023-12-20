@@ -27,7 +27,7 @@ export const LocationPage: FC = () => {
         locationRequest.execute().then((results) => {
             setLocationResult(results);
         });
-    }, [locationResult]);
+    }, []);
 
     return (
         <div className="location-page has-results">

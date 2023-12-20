@@ -1,13 +1,10 @@
-import { Request } from "./request";
+import { LOCATION_REQUEST_FIELDS } from "./resource";
+import { ResourceRequest } from "./resource-request";
 import { LocationResult } from "./search";
 
-const DEFAULT_LIMIT = 10;
-
-export class LocationRequest extends Request<LocationResult> {
-    constructor(query: string) {
-        super();
-
-        this.queries = [this.buildSearchQuery(query)];
+export class LocationRequest extends ResourceRequest<LocationResult> {
+    constructor(uri: string) {
+        super(uri, LOCATION_REQUEST_FIELDS);
     }
 
     formatResult(data: any[]): LocationResult {
@@ -27,25 +24,5 @@ export class LocationRequest extends Request<LocationResult> {
             longitude: binding.longitude?.value || null,
             country: binding.country?.value || null,
         };
-    }
-
-    private buildSearchQuery(select: string): string {
-        return `
-        SELECT DISTINCT ?abstract ?thumbnail ?name ?comment ?latitude ?longitude ?country
-        WHERE {
-            dbr:${select} dbo:abstract ?abstract.
-            
-            FILTER (lang(?comment) = 'en')
-            FILTER (lang(?abstract) = 'en')
-
-            OPTIONAL { dbr:${select} dbp:label ?label. }
-            OPTIONAL { dbr:${select} dbo:thumbnail ?thumbnail. }
-            OPTIONAL { dbr:${select} dbp:name ?name. }
-            OPTIONAL { dbr:${select} rdfs:comment ?comment. }
-            OPTIONAL { dbr:${select} geo:lat ?latitude. }
-            OPTIONAL { dbr:${select} geo:long ?longitude. }
-            OPTIONAL { dbr:${select} dbo:country ?country. }
-        }
-        `;
     }
 }
