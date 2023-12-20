@@ -9,9 +9,6 @@ import Breadcrumbs from "@mui/joy/Breadcrumbs";
 import { Grid, Typography } from "@mui/joy";
 import { Link } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
-import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
-import HelpIcon from "@mui/icons-material/Help";
-import AspectRatio from "@mui/joy/AspectRatio";
 import Box from "@mui/joy/Box";
 
 export const CharacterPage: FC = () => {
@@ -156,7 +153,7 @@ export const CharacterPage: FC = () => {
                                 {characterResult?.abstract && (
                                     <>
                                         <Typography textColor="#fff" level="h4">
-                                            Abstract
+                                            About
                                         </Typography>
                                         <Typography
                                             textColor="#fff"
