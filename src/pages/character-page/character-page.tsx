@@ -40,7 +40,7 @@ export const CharacterPage: FC = () => {
     }, [characterResult]);
 
     return (
-        <div className="location-page has-results">
+        <div className="character-page has-results">
             <div className="top-section">
                 <Logo />
                 <SearchBar
