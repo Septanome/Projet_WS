@@ -12,6 +12,14 @@ export class CharacterRequest extends ResourceRequest<CharacterResult> {
 
         const binding = resources.results.bindings[0];
 
+        if (binding.siblings?.value.startsWith("http")) {
+            binding.siblings.value = binding.siblings.value.substring(28);
+        }
+
+        if (binding.parents?.value.startsWith("http")) {
+            binding.parents.value = binding.parents.value.substring(28);
+        }
+
         return {
             url: binding.resource ? binding.resource.value : null,
             label: binding.label ? binding.label.value : null,
