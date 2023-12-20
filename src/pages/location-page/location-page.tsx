@@ -27,7 +27,7 @@ export const LocationPage: FC = () => {
         locationRequest.execute().then((results) => {
             setLocationResult(results);
         });
-    }, []);
+    }, [encodedLocationName]);
 
     return (
         <div className="location-page has-results">
@@ -47,14 +47,28 @@ export const LocationPage: FC = () => {
                 {locationResult && (
                     <>
                         <Box sx={{ pt: 1, pb: 1 }}>
-                            {locationResult?.thumbnail && (
+                            {locationResult?.thumbnail ? (
                                 <AspectRatio flex maxHeight={"200px"}>
                                     <img
                                         src={locationResult?.thumbnail}
                                         srcSet={
                                             locationResult?.thumbnail + "2x"
                                         }
-                                        alt="A beautiful landscape."
+                                        alt=""
+                                    />
+                                </AspectRatio>
+                            ) : (
+                                <AspectRatio flex maxHeight={"200px"}>
+                                    <img
+                                        src={
+                                            process.env.PUBLIC_URL +
+                                            "/no_image.jpg"
+                                        }
+                                        srcSet={
+                                            process.env.PUBLIC_URL +
+                                            "/no_image.jpg 2x"
+                                        }
+                                        alt=""
                                     />
                                 </AspectRatio>
                             )}
@@ -105,9 +119,19 @@ export const LocationPage: FC = () => {
                         </Box>
 
                         <Box sx={{ pt: 1, pb: 1 }}>
-                            <Typography textColor="#fff" textAlign="justify">
-                                {locationResult?.description ?? ""}
-                            </Typography>
+                            {locationResult?.description && (
+                                <>
+                                    <Typography textColor="#fff" level="h4">
+                                        Description
+                                    </Typography>
+                                    <Typography
+                                        textColor="#fff"
+                                        textAlign="justify"
+                                    >
+                                        {locationResult?.description}
+                                    </Typography>
+                                </>
+                            )}
                         </Box>
                     </>
                 )}

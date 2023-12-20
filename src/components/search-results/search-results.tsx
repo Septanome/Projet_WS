@@ -11,9 +11,17 @@ interface SearchResultsProps {
 export const SearchResults: FC<SearchResultsProps> = ({ search, results }) => {
     return (
         <Grid container spacing={4}>
-            <Grid xs={12}>
-                <h1>Search results for &quot;{search}&quot;</h1>
-            </Grid>
+            {results.length == 0 && (
+                <Grid xs={12}>
+                    <h1>No results found for &quot;{search}&quot;</h1>
+                </Grid>
+            )}
+
+            {results.length > 0 && (
+                <Grid xs={12}>
+                    <h1>Search results for &quot;{search}&quot;</h1>
+                </Grid>
+            )}
 
             {results.map((result, index) => (
                 <Grid key={index} xs={6} md={3}>
