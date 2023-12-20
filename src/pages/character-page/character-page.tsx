@@ -6,7 +6,7 @@ import { CharacterRequest } from "../../models/request/character-request";
 import "./character-page.scss";
 import { CharacterResult } from "../../models/request/search";
 import Breadcrumbs from "@mui/joy/Breadcrumbs";
-import { Typography } from "@mui/joy";
+import { Grid, Typography } from "@mui/joy";
 import { Link } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
 import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
@@ -53,22 +53,91 @@ export const CharacterPage: FC = () => {
                 />
             </div>
 
-            <div className="bottom-section">
+            <Grid container>
                 {characterResult && (
                     <>
-                        <Box sx={{ pt: 1, pb: 1 }}>
-                            {characterResult?.thumbnail ? (
-                                <AspectRatio flex maxHeight={"200px"}>
+                        <Grid xs={12}>
+                            <Box>
+                                <Breadcrumbs
+                                    separator="›"
+                                    aria-label="breadcrumbs"
+                                    sx={{ color: "#fff" }}
+                                >
+                                    <Link
+                                        to={"/"}
+                                        style={{
+                                            color: "#fff",
+                                            textDecoration: "none",
+                                        }}
+                                    >
+                                        Search
+                                    </Link>
+                                    <Typography textColor="#fff">
+                                        <PersonIcon
+                                            sx={{ mr: 0.5, color: "#fff" }}
+                                        />
+                                        Character
+                                    </Typography>
+                                    <Typography textColor="#fff">
+                                        {characterResult?.label ?? ""}
+                                    </Typography>
+                                </Breadcrumbs>
+                            </Box>
+
+                            <Box sx={{ pt: 1, pb: 1 }}>
+                                <Typography textColor="#fff" level="h1">
+                                    {characterResult?.label ?? ""}
+                                </Typography>
+                            </Box>
+
+                            <Box sx={{ pt: 1, pb: 1 }}>
+                                {characterResult?.parents && (
+                                    <>
+                                        <Typography textColor="#fff" level="h4">
+                                            Parents
+                                        </Typography>
+                                        <Typography
+                                            textColor="#fff"
+                                            textAlign="justify"
+                                        >
+                                            {characterResult?.parents}
+                                        </Typography>
+                                    </>
+                                )}
+                            </Box>
+
+                            <Box sx={{ pt: 1, pb: 1 }}>
+                                {characterResult?.siblings && (
+                                    <>
+                                        <Typography textColor="#fff" level="h4">
+                                            Siblings
+                                        </Typography>
+                                        <Typography
+                                            textColor="#fff"
+                                            textAlign="justify"
+                                        >
+                                            {characterResult?.siblings}
+                                        </Typography>
+                                    </>
+                                )}
+                            </Box>
+                        </Grid>
+
+                        <Grid container spacing={2} sx={{ pt: 2, pb: 2 }}>
+                            <Grid xs={6}>
+                                {characterResult?.thumbnail ? (
                                     <img
                                         src={characterResult?.thumbnail}
                                         srcSet={
                                             characterResult?.thumbnail + "2x"
                                         }
                                         alt=""
+                                        style={{
+                                            width: "100%",
+                                            height: "auto",
+                                        }}
                                     />
-                                </AspectRatio>
-                            ) : (
-                                <AspectRatio flex maxHeight={"200px"}>
+                                ) : (
                                     <img
                                         src={
                                             process.env.PUBLIC_URL +
@@ -80,65 +149,28 @@ export const CharacterPage: FC = () => {
                                         }
                                         alt=""
                                     />
-                                </AspectRatio>
-                            )}
-                        </Box>
+                                )}
+                            </Grid>
 
-                        <Box>
-                            <Breadcrumbs
-                                separator="›"
-                                aria-label="breadcrumbs"
-                                sx={{ color: "#fff" }}
-                            >
-                                <Link
-                                    to={"/"}
-                                    style={{
-                                        color: "#fff",
-                                        textDecoration: "none",
-                                    }}
-                                >
-                                    Search
-                                </Link>
-                                <Typography textColor="#fff">
-                                    <PersonIcon
-                                        sx={{ mr: 0.5, color: "#fff" }}
-                                    />
-                                    Character
-                                </Typography>
-                                <Typography textColor="#fff">
-                                    {characterResult?.label ?? ""}
-                                </Typography>
-                            </Breadcrumbs>
-                        </Box>
-
-                        <Box sx={{ pt: 1, pb: 1 }}>
-                            <Typography textColor="#fff" level="h1">
-                                {characterResult?.label ?? ""}
-                            </Typography>
-                        </Box>
-
-                        <Box sx={{ pt: 1, pb: 1 }}>
-                            {characterResult?.parents && (
-                                <Typography textColor="#fff" level="h4">
-                                    Parents: {characterResult?.parents ?? ""}
-                                </Typography>
-                            )}
-
-                            {characterResult?.siblings && (
-                                <Typography textColor="#fff" level="h4">
-                                    Siblings: {characterResult?.siblings ?? ""}
-                                </Typography>
-                            )}
-                        </Box>
-
-                        <Box sx={{ pt: 1, pb: 1 }}>
-                            <Typography textColor="#fff" textAlign="justify">
-                                {characterResult?.abstract ?? ""}
-                            </Typography>
-                        </Box>
+                            <Grid component="div" xs={6}>
+                                {characterResult?.abstract && (
+                                    <>
+                                        <Typography textColor="#fff" level="h4">
+                                            Abstract
+                                        </Typography>
+                                        <Typography
+                                            textColor="#fff"
+                                            textAlign="justify"
+                                        >
+                                            {characterResult?.abstract}
+                                        </Typography>
+                                    </>
+                                )}
+                            </Grid>
+                        </Grid>
                     </>
                 )}
-            </div>
+            </Grid>
         </div>
     );
 };
