@@ -1,3 +1,4 @@
+import { RESOURCE_BASE_URL } from "../../constants/dbpedia";
 import { CHARACTERS_REQ, LOCATIONS_REQ } from "../../constants/requests";
 import { escape_query } from "../../utils/query";
 import { PaginatedData } from "../pagination/pagination";
@@ -40,7 +41,10 @@ export class SearchRequest extends Request<PaginatedData<SearchResult>> {
                     url: binding.resource.value,
                     label: binding.label.value,
                     description: binding.abstract.value,
-                    uriPart: binding.resource.value?.split("/").pop(),
+                    uriPart: binding.resource.value?.replace(
+                        RESOURCE_BASE_URL,
+                        "",
+                    ),
                     thumbnail: binding.thumbnail
                         ? binding.thumbnail.value
                         : null,
