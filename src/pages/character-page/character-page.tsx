@@ -37,10 +37,10 @@ export const CharacterPage: FC = () => {
                 console.error(error);
                 setCharacterResult(undefined);
             });
-    }, []);
+    }, [characterResult]);
 
     return (
-        <div className="location-page">
+        <div className="location-page has-results">
             <div className="top-section">
                 <Logo />
                 <SearchBar
