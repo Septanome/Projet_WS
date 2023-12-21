@@ -74,7 +74,10 @@ export const SearchPage: FC = () => {
                 {searchResult && (
                     <>
                         <SearchResults
-                            search={searchQuery ?? ""}
+                            searchRef={{
+                                query: searchQuery ?? "",
+                                page: searchResult.currentPage,
+                            }}
                             results={searchResult}
                             loading={searchLoading}
                         />

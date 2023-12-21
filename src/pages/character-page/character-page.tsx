@@ -14,6 +14,7 @@ import Box from "@mui/joy/Box";
 import { ResourceTable } from "../../components/resource-table/resource-table";
 import { CollapsedText } from "../../components/collapsed-text/collapsed-text";
 import { useRequest } from "../../hooks/use-request";
+import { BackToSearchBtn } from "../../components/back-to-search-btn/back-to-search-btn";
 
 export const CharacterPage: FC = () => {
     const {
@@ -55,6 +56,7 @@ export const CharacterPage: FC = () => {
 
                 {characterResult && (
                     <>
+                        <BackToSearchBtn />
                         <Box sx={{ pt: 1, pb: 1 }}>
                             {characterResult?.thumbnail && (
                                 <AspectRatio flex maxHeight={"200px"}>

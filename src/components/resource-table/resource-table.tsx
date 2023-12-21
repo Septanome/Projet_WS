@@ -30,27 +30,29 @@ export const ResourceTable: FC<ResourceTableProps> = ({ resourceItems }) => {
               : value;
     };
 
+    const renderItemValue = (resource: ResourceItem, value: string) => {
+        return value.startsWith(RESOURCE_BASE_URL) ? (
+            <Link
+                key={value}
+                to={itemUrl(resource, value)}
+                target={
+                    resource.linkTo === undefined ||
+                    resource.linkTo === "external"
+                        ? "blank"
+                        : undefined
+                }
+            >
+                {value.replace(RESOURCE_BASE_URL, "")}
+            </Link>
+        ) : (
+            <span key={value}>{value}</span>
+        );
+    };
+
     const renderValue = (resource: ResourceItem) => {
         return Array.isArray(resource.value)
-            ? resource.value.map((value) =>
-                  value.startsWith(RESOURCE_BASE_URL) ? (
-                      <Link
-                          key={value}
-                          to={itemUrl(resource, value)}
-                          target={
-                              resource.linkTo === undefined ||
-                              resource.linkTo === "external"
-                                  ? "blank"
-                                  : undefined
-                          }
-                      >
-                          {value.replace(RESOURCE_BASE_URL, "")}
-                      </Link>
-                  ) : (
-                      <span key={value}>{value}</span>
-                  ),
-              )
-            : resource.value;
+            ? resource.value.map((value) => renderItemValue(resource, value))
+            : renderItemValue(resource, resource.value);
     };
 
     return (

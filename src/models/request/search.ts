@@ -43,3 +43,8 @@ export interface CharacterResult {
     planet: string | null;
     symbol: string[] | null;
 }
+
+export interface SearchRef {
+    query: string;
+    page: number;
+}
