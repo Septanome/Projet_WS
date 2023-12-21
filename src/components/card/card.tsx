@@ -23,7 +23,7 @@ export const CardComponent: FC<CardResultsProps> = ({ content }) => {
             to={`/${content.type}/${content.uriPart}`}
             style={{ textDecoration: "none" }}
         >
-            <Card sx={{ minHeight: "280px", width: 180 }}>
+            <Card sx={{ aspectRatio: 0.65 }}>
                 <CardCover>
                     {content.thumbnail ? (
                         <img

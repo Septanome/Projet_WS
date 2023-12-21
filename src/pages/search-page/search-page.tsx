@@ -27,6 +27,7 @@ export const SearchPage: FC = () => {
 
     const navigateToPage = useCallback(
         (page: number) => {
+            scrollTo({ top: 0, behavior: "smooth" });
             setSearchParams((params) => {
                 params.set("page", String(page));
                 params.set("search", searchQuery ?? "");
@@ -38,6 +39,7 @@ export const SearchPage: FC = () => {
 
     const navigatePreviousPage = useCallback(() => {
         setSearchParams((params) => {
+            scrollTo({ top: 0, behavior: "smooth" });
             const currentPage = Number(params.get("page") ?? 1);
             params.set("page", String(Math.max(1, currentPage - 1)));
             params.set("search", searchQuery ?? "");
@@ -47,6 +49,7 @@ export const SearchPage: FC = () => {
 
     const navigateNextPage = useCallback(() => {
         setSearchParams((params) => {
+            scrollTo({ top: 0, behavior: "smooth" });
             const currentPage = Number(params.get("page") ?? 1);
             params.set("page", String(currentPage + 1));
             params.set("search", searchQuery ?? "");
@@ -68,13 +71,14 @@ export const SearchPage: FC = () => {
                 {searchError && (
                     <Typography color="danger">{searchError}</Typography>
                 )}
-                {searchLoading && <CircularProgress />}
-                {!searchLoading && searchResult && (
+                {searchResult && (
                     <>
                         <SearchResults
                             search={searchQuery ?? ""}
-                            results={searchResult.data}
+                            results={searchResult}
+                            loading={searchLoading}
                         />
+                        <br />
                         <Pagination
                             pagination={searchResult}
                             disabled={searchLoading}

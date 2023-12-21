@@ -3,31 +3,39 @@ import CardComponent from "../card/card";
 import { SearchResult } from "../../models/request/search";
 import { Link } from "react-router-dom";
 import Grid from "@mui/joy/Grid";
+import "./search-results.scss";
+import { CircularProgress, Typography } from "@mui/joy";
+import { PaginatedData } from "../../models/pagination/pagination";
 
 interface SearchResultsProps {
     search: string;
-    results: SearchResult[];
+    results: PaginatedData<SearchResult>;
+    loading: boolean;
 }
-export const SearchResults: FC<SearchResultsProps> = ({ search, results }) => {
+export const SearchResults: FC<SearchResultsProps> = ({
+    search,
+    results,
+    loading,
+}) => {
     return (
-        <Grid container spacing={4}>
-            {results.length == 0 && (
-                <Grid xs={12}>
-                    <h1>No results found for &quot;{search}&quot;</h1>
-                </Grid>
-            )}
+        <div className="search-results">
+            <div className="search-results__head">
+                <Typography level="title-lg">
+                    Search results for &quot;{search}&quot;
+                </Typography>
 
-            {results.length > 0 && (
-                <Grid xs={12}>
-                    <h1>Search results for &quot;{search}&quot;</h1>
-                </Grid>
-            )}
+                {loading ? (
+                    <CircularProgress size="sm" />
+                ) : (
+                    <Typography>{results.total} results</Typography>
+                )}
+            </div>
 
-            {results.map((result, index) => (
-                <Grid key={index} xs={6} md={3}>
-                    <CardComponent content={result} />
-                </Grid>
-            ))}
-        </Grid>
+            <div className="search-results__items">
+                {results.data.map((result, index) => (
+                    <CardComponent key={index} content={result} />
+                ))}
+            </div>
+        </div>
     );
 };
