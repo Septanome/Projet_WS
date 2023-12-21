@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect } from "react";
 import { Logo } from "../../components/logo/logo";
 import { SearchBar } from "../../components/search-bar/search-bar";
 import { useParams } from "react-router-dom";
@@ -7,29 +7,30 @@ import "./location-page.scss";
 import { LocationResult } from "../../models/request/search";
 import Breadcrumbs from "@mui/joy/Breadcrumbs";
 import { Link } from "react-router-dom";
-import { Typography } from "@mui/joy";
-import PersonIcon from "@mui/icons-material/Person";
+import { CircularProgress, Typography } from "@mui/joy";
 import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
-import HelpIcon from "@mui/icons-material/Help";
 import AspectRatio from "@mui/joy/AspectRatio";
 import Box from "@mui/joy/Box";
 import { ResourceTable } from "../../components/resource-table/resource-table";
 import { CollapsedText } from "../../components/collapsed-text/collapsed-text";
+import { useRequest } from "../../hooks/use-request";
 
 export const LocationPage: FC = () => {
-    const [locationResult, setLocationResult] = useState<LocationResult>();
+    const {
+        setRequest,
+        result: locationResult,
+        isLoading,
+        error,
+    } = useRequest<LocationResult>();
+
     const { locationName: encodedLocationName } = useParams<{
         locationName: string;
     }>();
 
     useEffect(() => {
-        const locationName = decodeURIComponent(encodedLocationName || "");
-        const locationRequest = new LocationRequest(locationName);
-
-        locationRequest.execute().then((results) => {
-            console.log(results);
-            setLocationResult(results);
-        });
+        setRequest(
+            new LocationRequest(decodeURIComponent(encodedLocationName || "")),
+        );
     }, [encodedLocationName]);
 
     return (
@@ -47,6 +48,9 @@ export const LocationPage: FC = () => {
             </div>
 
             <div className="bottom-section">
+                {isLoading && <CircularProgress />}
+                {error && <Typography color="danger">{error}</Typography>}
+
                 {locationResult && (
                     <>
                         <Box sx={{ pt: 1, pb: 1 }}>

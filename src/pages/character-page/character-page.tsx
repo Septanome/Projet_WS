@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect } from "react";
 import { Logo } from "../../components/logo/logo";
 import { SearchBar } from "../../components/search-bar/search-bar";
 import { useParams } from "react-router-dom";
@@ -6,41 +6,33 @@ import { CharacterRequest } from "../../models/request/character-request";
 import "./character-page.scss";
 import { CharacterResult } from "../../models/request/search";
 import Breadcrumbs from "@mui/joy/Breadcrumbs";
-import { Typography } from "@mui/joy";
+import { CircularProgress, Typography } from "@mui/joy";
 import { Link } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
-import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
-import HelpIcon from "@mui/icons-material/Help";
 import AspectRatio from "@mui/joy/AspectRatio";
 import Box from "@mui/joy/Box";
-import { RESOURCE_BASE_URL } from "../../constants/dbpedia";
 import { ResourceTable } from "../../components/resource-table/resource-table";
 import { CollapsedText } from "../../components/collapsed-text/collapsed-text";
+import { useRequest } from "../../hooks/use-request";
 
 export const CharacterPage: FC = () => {
-    const [characterResult, setCharacterResult] = useState<CharacterResult>();
-    const [searchError, setSearchError] = useState<string | null>(null);
+    const {
+        setRequest,
+        result: characterResult,
+        isLoading,
+        error,
+    } = useRequest<CharacterResult>();
 
     const { characterName: encodedCharacterName } = useParams<{
         characterName: string;
     }>();
 
     useEffect(() => {
-        const characterName = decodeURIComponent(encodedCharacterName || "");
-
-        const characterRequest = new CharacterRequest(characterName);
-
-        setCharacterResult(undefined);
-        characterRequest
-            .execute()
-            .then((results) => {
-                setCharacterResult(results);
-            })
-            .catch((error) => {
-                setSearchError(String(error));
-                console.error(error);
-                setCharacterResult(undefined);
-            });
+        setRequest(
+            new CharacterRequest(
+                decodeURIComponent(encodedCharacterName || ""),
+            ),
+        );
     }, [encodedCharacterName]);
 
     return (
@@ -58,6 +50,9 @@ export const CharacterPage: FC = () => {
             </div>
 
             <div className="bottom-section">
+                {isLoading && <CircularProgress />}
+                {error && <Typography color="danger">{error}</Typography>}
+
                 {characterResult && (
                     <>
                         <Box sx={{ pt: 1, pb: 1 }}>
