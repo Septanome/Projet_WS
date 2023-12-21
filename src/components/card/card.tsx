@@ -9,30 +9,42 @@ import PersonIcon from "@mui/icons-material/Person";
 import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
 import HelpIcon from "@mui/icons-material/Help";
 import { FC } from "react";
-import { SearchResult } from "../../models/request/search";
+import { SearchRef, SearchResult } from "../../models/request/search";
 import { useNavigate } from "react-router-dom";
 
 interface CardResultsProps {
     content: SearchResult;
+    searchRef: SearchRef;
 }
-export const CardComponent: FC<CardResultsProps> = ({ content }) => {
+export const CardComponent: FC<CardResultsProps> = ({ content, searchRef }) => {
     const navigate = useNavigate();
 
     return (
-        <Link to={`/${content.type}/${content.uriPart}`}>
-            <Card sx={{ minHeight: "280px", width: 180 }}>
+        <Link
+            to={`/${content.type}/${content.uriPart}?queryRef=${searchRef.query}&pageRef=${searchRef.page}`}
+            style={{ textDecoration: "none" }}
+        >
+            <Card sx={{ aspectRatio: 0.65 }}>
                 <CardCover>
                     {content.thumbnail ? (
                         <img
-                            src={content.thumbnail}
-                            srcSet={content.thumbnail + " 2x"}
+                            src={content.thumbnail.replace(
+                                "http://",
+                                "https://",
+                            )}
+                            srcSet={
+                                content.thumbnail.replace(
+                                    "http://",
+                                    "https://",
+                                ) + " 2x"
+                            }
                             loading="lazy"
                             alt={content.label}
                         />
                     ) : (
                         <img
-                            src="no_image.jpg"
-                            srcSet="no_image.jpg 2x"
+                            src={`${content.type}.png`}
+                            srcSet={`${content.type}.png 2x`}
                             loading="lazy"
                             alt={content.label}
                         />

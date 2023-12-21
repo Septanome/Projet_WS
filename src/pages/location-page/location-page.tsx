@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect } from "react";
 import { Logo } from "../../components/logo/logo";
 import { SearchBar } from "../../components/search-bar/search-bar";
 import { useParams } from "react-router-dom";
@@ -7,26 +7,31 @@ import "./location-page.scss";
 import { LocationResult } from "../../models/request/search";
 import Breadcrumbs from "@mui/joy/Breadcrumbs";
 import { Link } from "react-router-dom";
-import { Typography } from "@mui/joy";
-import PersonIcon from "@mui/icons-material/Person";
+import { CircularProgress, Typography } from "@mui/joy";
 import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
-import HelpIcon from "@mui/icons-material/Help";
 import AspectRatio from "@mui/joy/AspectRatio";
 import Box from "@mui/joy/Box";
+import { ResourceTable } from "../../components/resource-table/resource-table";
+import { CollapsedText } from "../../components/collapsed-text/collapsed-text";
+import { useRequest } from "../../hooks/use-request";
+import { BackToSearchBtn } from "../../components/back-to-search-btn/back-to-search-btn";
 
 export const LocationPage: FC = () => {
-    const [locationResult, setLocationResult] = useState<LocationResult>();
+    const {
+        setRequest,
+        result: locationResult,
+        isLoading,
+        error,
+    } = useRequest<LocationResult>();
+
     const { locationName: encodedLocationName } = useParams<{
         locationName: string;
     }>();
 
     useEffect(() => {
-        const locationName = decodeURIComponent(encodedLocationName || "");
-        const locationRequest = new LocationRequest(locationName);
-
-        locationRequest.execute().then((results) => {
-            setLocationResult(results);
-        });
+        setRequest(
+            new LocationRequest(decodeURIComponent(encodedLocationName || "")),
+        );
     }, [encodedLocationName]);
 
     return (
@@ -44,17 +49,26 @@ export const LocationPage: FC = () => {
             </div>
 
             <div className="bottom-section">
+                {isLoading && <CircularProgress />}
+                {error && <Typography color="danger">{error}</Typography>}
+
                 {locationResult && (
                     <>
+                        <BackToSearchBtn />
                         <Box sx={{ pt: 1, pb: 1 }}>
                             {locationResult?.thumbnail ? (
                                 <AspectRatio flex maxHeight={"200px"}>
                                     <img
-                                        src={locationResult?.thumbnail}
+                                        src={locationResult?.thumbnail.replace(
+                                            "http://",
+                                            "https://",
+                                        )}
                                         srcSet={
-                                            locationResult?.thumbnail + "2x"
+                                            locationResult?.thumbnail.replace(
+                                                "http://",
+                                                "https://",
+                                            ) + "2x"
                                         }
-                                        alt=""
                                     />
                                 </AspectRatio>
                             ) : (
@@ -103,36 +117,47 @@ export const LocationPage: FC = () => {
 
                         <Box sx={{ pt: 1, pb: 1 }}>
                             <Typography textColor="#fff" level="h1">
-                                {locationResult?.name ?? ""}
-                            </Typography>
-                            <Typography textColor="#fff" level="h2">
                                 {locationResult?.label ?? ""}
                             </Typography>
-
-                            {locationResult?.latitude &&
-                                locationResult?.longitude && (
-                                    <Typography textColor="#fff" level="h4">
-                                        {locationResult?.latitude ?? ""}° -{" "}
-                                        {locationResult?.longitude ?? ""}°
-                                    </Typography>
-                                )}
                         </Box>
 
                         <Box sx={{ pt: 1, pb: 1 }}>
                             {locationResult?.description && (
                                 <>
-                                    <Typography textColor="#fff" level="h4">
-                                        Description
-                                    </Typography>
                                     <Typography
                                         textColor="#fff"
                                         textAlign="justify"
                                     >
-                                        {locationResult?.description}
+                                        <CollapsedText
+                                            text={
+                                                locationResult?.description ??
+                                                ""
+                                            }
+                                        />
+                                        {}
                                     </Typography>
                                 </>
                             )}
                         </Box>
+
+                        <br />
+
+                        <ResourceTable
+                            resourceItems={[
+                                {
+                                    label: "Location",
+                                    value:
+                                        locationResult?.latitude +
+                                        "°, " +
+                                        locationResult?.longitude +
+                                        "°",
+                                },
+                                {
+                                    label: "Country",
+                                    value: locationResult?.country ?? "",
+                                },
+                            ]}
+                        />
                     </>
                 )}
             </div>
