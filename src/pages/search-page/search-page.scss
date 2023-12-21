@@ -10,6 +10,8 @@
         display: grid;
         grid-template-columns: auto;
         grid-template-rows: repeat(2, auto);
+        align-items: center;
+        align-content: center;
         width: 100%;
         gap: 24px;
 
