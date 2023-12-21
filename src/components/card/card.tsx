@@ -19,20 +19,31 @@ export const CardComponent: FC<CardResultsProps> = ({ content }) => {
     const navigate = useNavigate();
 
     return (
-        <Link to={`/${content.type}/${content.uriPart}`}>
+        <Link
+            to={`/${content.type}/${content.uriPart}`}
+            style={{ textDecoration: "none" }}
+        >
             <Card sx={{ minHeight: "280px", width: 180 }}>
                 <CardCover>
                     {content.thumbnail ? (
                         <img
-                            src={content.thumbnail}
-                            srcSet={content.thumbnail + " 2x"}
+                            src={content.thumbnail.replace(
+                                "http://",
+                                "https://",
+                            )}
+                            srcSet={
+                                content.thumbnail.replace(
+                                    "http://",
+                                    "https://",
+                                ) + " 2x"
+                            }
                             loading="lazy"
                             alt={content.label}
                         />
                     ) : (
                         <img
-                            src="no_image.jpg"
-                            srcSet="no_image.jpg 2x"
+                            src={`${content.type}.png`}
+                            srcSet={`${content.type}.png 2x`}
                             loading="lazy"
                             alt={content.label}
                         />

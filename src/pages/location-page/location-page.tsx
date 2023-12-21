@@ -50,11 +50,16 @@ export const LocationPage: FC = () => {
                             {locationResult?.thumbnail ? (
                                 <AspectRatio flex maxHeight={"200px"}>
                                     <img
-                                        src={locationResult?.thumbnail}
+                                        src={locationResult?.thumbnail.replace(
+                                            "http://",
+                                            "https://",
+                                        )}
                                         srcSet={
-                                            locationResult?.thumbnail + "2x"
+                                            locationResult?.thumbnail.replace(
+                                                "http://",
+                                                "https://",
+                                            ) + "2x"
                                         }
-                                        alt=""
                                     />
                                 </AspectRatio>
                             ) : (
