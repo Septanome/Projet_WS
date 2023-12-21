@@ -13,6 +13,8 @@ import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
 import HelpIcon from "@mui/icons-material/Help";
 import AspectRatio from "@mui/joy/AspectRatio";
 import Box from "@mui/joy/Box";
+import { ResourceTable } from "../../components/resource-table/resource-table";
+import { CollapsedText } from "../../components/collapsed-text/collapsed-text";
 
 export const LocationPage: FC = () => {
     const [locationResult, setLocationResult] = useState<LocationResult>();
@@ -25,6 +27,7 @@ export const LocationPage: FC = () => {
         const locationRequest = new LocationRequest(locationName);
 
         locationRequest.execute().then((results) => {
+            console.log(results);
             setLocationResult(results);
         });
     }, [encodedLocationName]);
@@ -108,36 +111,47 @@ export const LocationPage: FC = () => {
 
                         <Box sx={{ pt: 1, pb: 1 }}>
                             <Typography textColor="#fff" level="h1">
-                                {locationResult?.name ?? ""}
-                            </Typography>
-                            <Typography textColor="#fff" level="h2">
                                 {locationResult?.label ?? ""}
                             </Typography>
-
-                            {locationResult?.latitude &&
-                                locationResult?.longitude && (
-                                    <Typography textColor="#fff" level="h4">
-                                        {locationResult?.latitude ?? ""}° -{" "}
-                                        {locationResult?.longitude ?? ""}°
-                                    </Typography>
-                                )}
                         </Box>
 
                         <Box sx={{ pt: 1, pb: 1 }}>
                             {locationResult?.description && (
                                 <>
-                                    <Typography textColor="#fff" level="h4">
-                                        Description
-                                    </Typography>
                                     <Typography
                                         textColor="#fff"
                                         textAlign="justify"
                                     >
-                                        {locationResult?.description}
+                                        <CollapsedText
+                                            text={
+                                                locationResult?.description ??
+                                                ""
+                                            }
+                                        />
+                                        {}
                                     </Typography>
                                 </>
                             )}
                         </Box>
+
+                        <br />
+
+                        <ResourceTable
+                            resourceItems={[
+                                {
+                                    label: "Location",
+                                    value:
+                                        locationResult?.latitude +
+                                        "°, " +
+                                        locationResult?.longitude +
+                                        "°",
+                                },
+                                {
+                                    label: "Country",
+                                    value: locationResult?.country ?? "",
+                                },
+                            ]}
+                        />
                     </>
                 )}
             </div>
